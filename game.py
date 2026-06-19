@@ -1,29 +1,41 @@
 import pygame
 
-def check_winner(makers):
-    y = 0
-    winner = 0
-    for i in makers:
-        if sum(i) == 3:
-            winner = 1
-        elif sum(i) == -3:
-            winner = 2
+def check_winner(markers):
+    # Lignes
+    for row in markers:
+        s = sum(row)
+        if s == 3:
+            return 1
+        if s == -3:
+            return 2
 
-        if makers[0][y] + makers[1][y] + makers[2][y] == 3:
-            winner = 1
-        elif makers[0][y] + makers[1][y] + makers[2][y] == -3:
-            winner = 2
+    # Colonnes
+    for col in range(3):
+        s = markers[0][col] + markers[1][col] + markers[2][col]
+        if s == 3:
+            return 1
+        if s == -3:
+            return 2
 
-        y += 1
-    if makers[0][0] + makers[1][1] + makers[2][2] == 3 and makers[2][0] + makers[1][1] + makers[0][2] == 3:
-        winner = 1
-    elif makers[0][0] + makers[1][1] + makers[2][2] == -3 and makers[2][0] + makers[1][1] + makers[0][2] == -3:
-        winner = 2
+    # Diagonales
+    diag1 = markers[0][0] + markers[1][1] + markers[2][2]
+    diag2 = markers[0][2] + markers[1][1] + markers[2][0]
 
-    return winner        
+    if diag1 == 3 or diag2 == 3:
+        return 1
+    if diag1 == -3 or diag2 == -3:
+        return 2
 
-def draw_winner(screen : pygame.Surface, winner):
-    font = pygame.font.SysFont(None, 55)
-    text = font.render(f"Player {winner} wins!", True, (0, 0, 255))
+    return 0
+
+def is_draw(markers):
+    for row in markers:
+        if 0 in row:
+            return False
+    return check_winner(markers) == 0
+
+def draw_end_screen(screen, message):
+    font = pygame.font.SysFont(None, 45)
     screen.fill((255, 255, 200))
-    screen.blit(text, (50, 130))
+    text = font.render(message, True, (0, 0, 255))
+    screen.blit(text, (20, 120))
