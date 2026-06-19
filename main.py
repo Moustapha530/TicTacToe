@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((300, 300))
 pygame.display.set_caption("TicTacToe")
 pygame.init()
 
