@@ -1,5 +1,9 @@
 import pygame
 
+makers = []
+for i in range(3):
+    makers.append([0] * 3)
+
 def draw_grid(screen : pygame.Surface):
     bg = (255, 255, 200)  # White background
     screen.fill(bg)
